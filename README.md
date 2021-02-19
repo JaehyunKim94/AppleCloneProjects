@@ -8,7 +8,7 @@
 
 #### - 메뉴 스타일링
 
-네비게이션을 구축하는 단계로 상단에 위치하는 메뉴들을 위치시키고, 스타일링해줍니다.
+- 네비게이션을 구축하는 단계로 상단에 위치하는 메뉴들을 위치시키고, 스타일링해줍니다.
 
 ```CSS
 .global-nav-links,
@@ -22,11 +22,22 @@
 }
 ```
 
-`local-nav-links`의 `my-name` 클래스를 제외하고 왼쪽 마진을 준다
+- `local-nav-links`의 `my-name` 클래스를 제외하고 왼쪽 마진을 준다
 
 ```CSS
 .local-nav-links a:not(.my-name) {
     margin-left: 2em;
+}
+```
+
+- rem 과 em을 활용한 크기 조절
+
+```css
+.description strong {
+    float:left;
+    margin-right: 0.2em;
+    font-size: 3rem;
+    color: rgb(29, 29, 31);
 }
 ```
 
