@@ -56,5 +56,11 @@
 }
 ```
 
+- Load vs DOMContentLoaded
 
+```js
+window.addEventListener('DOMContentLoaded', setLayout);
+window.addEventListener('load', setLayout);
+// DONContentLoaded는 HTML 요소만 로드되면 바로 실행되기 때문에 시점이 더 빠름 > 현장에서 더 많이 쓰임
+```
 
