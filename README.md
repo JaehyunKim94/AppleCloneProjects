@@ -30,7 +30,7 @@
 }
 ```
 
-- rem 과 em을 활용한 크기 조절
+- rem 과 em을 활용한 크기 조절 > 계산하기 편하다!
 
 ```css
 .description strong {
@@ -45,22 +45,25 @@
 
 ## 02. 스크롤을 이용한 인터랙션 구현
 
-- body의 id에 따라 텍스트 출력
+스크롤 이벤트 발생 시 scrollLoop와 playAnimation 함수가 실행된다. 
 
-```css
-#show-scene-0 #scroll-section-0 .sticky-elem,
-#show-scene-1 #scroll-section-1 .sticky-elem,
-#show-scene-2 #scroll-section-2 .sticky-elem,
-#show-scene-3 #scroll-section-3 .sticky-elem {
-    display: block;
-}
+```js
+window.addEventListener('scroll', () => {
+    yOffset = window.pageYOffset;
+    scrollLoop();		// 실행될 스크롤 섹션 정하기
+    playAnimation();	// 텍스트 애니메이션 (css)
+});
 ```
+
+
+
+
 
 - Load vs DOMContentLoaded
 
 ```js
 window.addEventListener('DOMContentLoaded', setLayout);
 window.addEventListener('load', setLayout);
-// DONContentLoaded는 HTML 요소만 로드되면 바로 실행되기 때문에 시점이 더 빠름 > 현장에서 더 많이 쓰임
+// DONContentLoaded는 HTML 요소만 로드되면 바로 실행되기 때문에 시점이 더 빠름 > 현직에서 더 많이 쓰임
 ```
 
