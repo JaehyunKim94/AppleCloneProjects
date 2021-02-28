@@ -57,8 +57,6 @@ window.addEventListener('scroll', () => {
 
 
 
-
-
 - Load vs DOMContentLoaded
 
 ```js
