@@ -131,6 +131,17 @@ a {
     background: rgb(29, 29, 31);
 }
 
+#scroll-section-2 .b {
+    top: 10%;
+    left: 40%;
+}
+
+#scroll-section-2 .b {
+    top: 15%;
+    left: 45%;
+}
+
+
 .mid-message {
     padding: 0 1rem;
     font-size: 2rem;
@@ -194,6 +205,15 @@ a {
     }
     .desc-message {
         width: 20%;
+    }
+
+    #scroll-section-2 .b {
+        top: 20%;
+        left: 53%;
+    }
+    
+    #scroll-section-2 .b {
+        left: 55%;
     }
     .mid-message {
         font-size: 4vw;
