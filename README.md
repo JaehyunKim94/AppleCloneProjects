@@ -65,3 +65,7 @@ window.addEventListener('load', setLayout);
 // DONContentLoaded는 HTML 요소만 로드되면 바로 실행되기 때문에 시점이 더 빠름 > 현직에서 더 많이 쓰임
 ```
 
+
+
+## 03. 비디오 인터랙션 구현
+
