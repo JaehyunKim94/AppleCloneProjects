@@ -67,5 +67,14 @@ window.addEventListener('load', setLayout);
 
 
 
+- 참고
+
+```
+document.querySelector("[.class    #id]")
+document.body.setAttribute(["id", `id_name_${변수}`])
+```
+
+
+
 ## 03. 비디오 인터랙션 구현
 
