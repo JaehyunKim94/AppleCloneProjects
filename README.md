@@ -77,4 +77,4 @@ document.body.setAttribute(["id", `id_name_${변수}`])
 
 
 ## 03. 비디오 인터랙션 구현
-
+- 비디오를 이미지로 바꿔서 저장후 스크롤할때마다 이미지 src를 바꿔준다
