@@ -18,11 +18,11 @@
         messageD: document.querySelector("#scroll-section-0 .main-message.d"),
         canvas: document.querySelector("#video-canvas-0"),
         context: document.querySelector("#video-canvas-0").getContext("2d"),
-        videoImages: []
+        videoImages: [],
       },
       values: {
         videoImageCount: 300, // 이미지 개수
-        imageSequence: [0, 299],  // 이미지 순서
+        imageSequence: [0, 299], // 이미지 순서
         messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
         messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
         messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -96,9 +96,9 @@
 
   function setCanvasImages() {
     let imgElem;
-    for(let i = 0; i < sceneInfo[0].values.videoImageCount; i++ ){
+    for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem = new Image();
-      imgElem.src = `.video/001/IMG_${6726 + i}.jpg`; // 첫 이미지 소스가 IMG_6726.jpg
+      imgElem.src = `./video/IMG_${6726 + i}.jpg`; // 첫 이미지 소스가 IMG_6726.jpg
       sceneInfo[0].objs.videoImages.push(imgElem);
     }
   }
@@ -128,6 +128,9 @@
       }
     }
     document.body.setAttribute("id", `show-scene-${currentScene}`);
+
+    const heightRatio = window.innerHeight / 1080;
+    sceneInfo[0].objs.canvas.style.transform = `scale(${heightRatio})`;
   }
 
   function scrollLoop() {
@@ -192,6 +195,10 @@
     switch (currentScene) {
       case 0:
         // console.log('0 play');
+        let sequence = calcValues(values.imageSequence, currentYOffset);
+        sequence = Math.round(sequence);
+        objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+
         if (scrollRatio <= 0.22) {
           // in
           objs.messageA.style.opacity = calcValues(
@@ -381,6 +388,8 @@
     playAnimation();
   });
   // window.addEventListener('DOMContentLoaded', setLayout);      // HTML 요소만 로드되면 바로 실행되기 때문에 시점이 더 빠름
-  window.addEventListener("load", setLayout);
+  window.addEventListener("load", () => {
+    setLayout();
+  });
   window.addEventListener("resize", setLayout);
 })();
