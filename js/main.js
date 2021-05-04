@@ -23,6 +23,7 @@
       values: {
         videoImageCount: 300, // 이미지 개수
         imageSequence: [0, 299], // 이미지 순서
+        canvas_opacity: [1, 0, { start: 0.9, end: 1 }],
         messageA_opacity_in: [0, 1, { start: 0.1, end: 0.2 }],
         messageB_opacity_in: [0, 1, { start: 0.3, end: 0.4 }],
         messageC_opacity_in: [0, 1, { start: 0.5, end: 0.6 }],
@@ -63,8 +64,15 @@
         messageC: document.querySelector("#scroll-section-2 .c"),
         pinB: document.querySelector("#scroll-section-2 .b .pin"),
         pinC: document.querySelector("#scroll-section-2 .c .pin"),
+        canvas: document.querySelector("#video-canvas-2"),
+        context: document.querySelector("#video-canvas-2").getContext("2d"),
+        videoImages: [],
       },
       values: {
+        videoImageCount: 960,
+        imageSequence: [0, 959],
+        canvas_opacity_in: [0, 1, { start: 0, end: 0.1 }],
+        canvas_opacity_out: [1, 0, { start: 0.95, end: 1 }],
         messageA_translateY_in: [20, 0, { start: 0.15, end: 0.2 }],
         messageB_translateY_in: [30, 0, { start: 0.6, end: 0.65 }],
         messageC_translateY_in: [30, 0, { start: 0.87, end: 0.92 }],
@@ -89,8 +97,17 @@
       objs: {
         container: document.querySelector("#scroll-section-3"),
         canvasCaption: document.querySelector(".canvas-caption"),
+        canvas: document.querySelector(".image-blend-canvas"),
+        context: document.querySelector(".image-blend-canvas").getContext("2d"),
+        imagePath: [
+          './images/blend-image-1.jpg',
+          './images/blend-image-2.jpg'
+        ],
+        images: []
       },
-      values: {},
+      values: {
+
+      },
     },
   ];
 
@@ -98,9 +115,22 @@
     let imgElem;
     for (let i = 0; i < sceneInfo[0].values.videoImageCount; i++) {
       imgElem = new Image();
-      imgElem.src = `./video/IMG_${6726 + i}.jpg`; // 첫 이미지 소스가 IMG_6726.jpg
+      imgElem.src = `./video/001/IMG_${6726 + i}.jpg`; // 첫 이미지 소스가 IMG_6726.jpg
       sceneInfo[0].objs.videoImages.push(imgElem);
     }
+    let imgElem2;
+    for (let i = 0; i < sceneInfo[2].values.videoImageCount; i++) {
+      imgElem2 = new Image();
+      imgElem2.src = `./video/002/IMG_${7027 + i}.jpg`; // 첫 이미지 소스가 IMG_6726.jpg
+      sceneInfo[2].objs.videoImages.push(imgElem2);
+    }
+    let imgElem3;
+    for(let i = 0; i <sceneInfo[3].objs.imagePath.length; i++) {
+      imgElem3 = new Image();
+      imgElem3.src = sceneInfo[3].objs.imagePath[i];
+      sceneInfo[3].objs.images.push(imgElem3);
+    }
+    console.log(sceneInfo[3].objs.images)
   }
   setCanvasImages();
 
@@ -131,6 +161,7 @@
 
     const heightRatio = window.innerHeight / 1080;
     sceneInfo[0].objs.canvas.style.transform = `scale(${heightRatio})`;
+    sceneInfo[2].objs.canvas.style.transform = `scale(${heightRatio})`;
   }
 
   function scrollLoop() {
@@ -198,6 +229,10 @@
         let sequence = calcValues(values.imageSequence, currentYOffset);
         sequence = Math.round(sequence);
         objs.context.drawImage(objs.videoImages[sequence], 0, 0);
+        objs.canvas.style.opacity = calcValues(
+          values.canvas_opacity,
+          currentYOffset
+        );
 
         if (scrollRatio <= 0.22) {
           // in
@@ -291,6 +326,24 @@
 
       case 2:
         // console.log('2 play');
+        let sequence2 = calcValues(values.imageSequence, currentYOffset);
+        sequence2 = Math.round(sequence2);
+        objs.context.drawImage(objs.videoImages[sequence2], 0, 0);
+
+        if (scrollRatio <= 0.5) {
+          // in
+          objs.canvas.style.opacity = calcValues(
+            values.canvas_opacity_in,
+            currentYOffset
+          );
+        } else {
+          // out
+          objs.canvas.style.opacity = calcValues(
+            values.canvas_opacity_out,
+            currentYOffset
+          );
+        }
+
         if (scrollRatio <= 0.32) {
           // in
           objs.messageA.style.opacity = calcValues(
@@ -372,11 +425,23 @@
             currentYOffset
           )})`;
         }
-        console.log(objs);
         break;
 
       case 3:
         // console.log('3 play');
+        // 가로/세로 꽉차게 하기 위한 세팅
+        const widthRatio = window.innerWidth / objs.canvas.width;
+        const heightRatio = window.innerHeight / objs.canvas.height;
+        let canvasScaleRatio;
+
+        if (widthRatio <= heightRatio) {
+          canvasScaleRatio = heightRatio;
+        } else {
+          canvasScaleRatio = widthRatio;
+        }
+        objs.canvas.style.transform = `scale(${canvasScaleRatio})`
+        objs.context.drawImage(objs.images[0], 0, 0)
+
         break;
     }
   }
@@ -387,7 +452,6 @@
     if (enterNewScene) return;
     playAnimation();
   });
-  // window.addEventListener('DOMContentLoaded', setLayout);      // HTML 요소만 로드되면 바로 실행되기 때문에 시점이 더 빠름
   window.addEventListener("load", () => {
     setLayout();
   });
