@@ -99,15 +99,10 @@
         canvasCaption: document.querySelector(".canvas-caption"),
         canvas: document.querySelector(".image-blend-canvas"),
         context: document.querySelector(".image-blend-canvas").getContext("2d"),
-        imagePath: [
-          './images/blend-image-1.jpg',
-          './images/blend-image-2.jpg'
-        ],
-        images: []
+        imagePath: ["./images/blend-image-1.jpg", "./images/blend-image-2.jpg"],
+        images: [],
       },
-      values: {
-
-      },
+      values: {},
     },
   ];
 
@@ -125,12 +120,12 @@
       sceneInfo[2].objs.videoImages.push(imgElem2);
     }
     let imgElem3;
-    for(let i = 0; i <sceneInfo[3].objs.imagePath.length; i++) {
+    for (let i = 0; i < sceneInfo[3].objs.imagePath.length; i++) {
       imgElem3 = new Image();
       imgElem3.src = sceneInfo[3].objs.imagePath[i];
       sceneInfo[3].objs.images.push(imgElem3);
     }
-    console.log(sceneInfo[3].objs.images)
+    console.log(sceneInfo[3].objs.images);
   }
   setCanvasImages();
 
@@ -439,9 +434,14 @@
         } else {
           canvasScaleRatio = widthRatio;
         }
-        objs.canvas.style.transform = `scale(${canvasScaleRatio})`
-        objs.context.drawImage(objs.images[0], 0, 0)
+        objs.canvas.style.transform = `scale(${canvasScaleRatio})`;
+        objs.context.drawImage(objs.images[0], 0, 0);
 
+        // 캔버스 사이즈에 맞춰 가정한 innerWidth와 innerHeight
+        const recalculatedInnerWidth = window.innerWidth / canvasScaleRatio;
+        const recalculatedInnerHeight = window.innerHeight / canvasScaleRatio;
+
+        const whiteRectWidth = recalculatedInnerWidth * 0.15;
         break;
     }
   }
